@@ -49,15 +49,6 @@ def gpxz_elevation(lats, lons):
 
         response = requests.request("POST", URL, headers=headers, data=payload)
 
-        # DEBUGGING...
-        # print("LOCATIONS:", {"locations": json.dumps(locations)})
-        # print()
-        # print("REQUEST HEADER:", response.request.headers)
-        # print("REQUEST BODY:", response.request.body)
-        # print()
-        # print("RESPONSE HEADER:", response.headers)
-        # print("REPONSE BODY:", response.text)
-
         response.raise_for_status()
         elevations += [r["elevation"] for r in response.json()["results"]]
 
