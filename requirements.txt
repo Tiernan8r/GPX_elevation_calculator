@@ -1,0 +1,5 @@
+gpxpy
+requests
+numpy
+git+https://github.com/tkrajina/gpxpy.git
+autopep8
