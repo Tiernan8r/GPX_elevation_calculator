@@ -11,7 +11,39 @@ PAUSE_INTERVAL = 1
 URL = "https://api.open-elevation.com/api/v1/lookup"
 
 
-def gpxz_elevation(lats, lons):
+def request(lats, lons):
+    """Iterate over the coordinates in chunks, querying the GPXZ api to return
+    a list of elevations in the same order."""
+
+    print(f"Requesting elevation details for {len(lats)} coordinates...")
+
+    elevations = []
+    locations = []
+    for lat, lon in zip(lats, lons):
+        loc = {
+            "latitude": lat,
+            "longitude": lon,
+        }
+
+        locations.append(loc)
+
+    payload = json.dumps({
+        "locations": locations
+    })
+    headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", URL, headers=headers, data=payload)
+
+    response.raise_for_status()
+    elevations += [r["elevation"] for r in response.json()["results"]]
+
+    return elevations
+
+
+def _batch_request(lats, lons):
     """Iterate over the coordinates in chunks, querying the GPXZ api to return
     a list of elevations in the same order."""
 
@@ -30,34 +62,16 @@ def gpxz_elevation(lats, lons):
         print(f"Chunk {i}:")
         i += 1
 
-        locations = []
-        for lat, lon in zip(lat_chunk, lon_chunk):
-            loc = {
-                "latitude": lat,
-                "longitude": lon,
-            }
+        elevs = request(lat_chunk, lon_chunk)
 
-            locations.append(loc)
-
-        payload = json.dumps({
-            "locations": locations
-        })
-        headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-
-        response = requests.request("POST", URL, headers=headers, data=payload)
-
-        response.raise_for_status()
-        elevations += [r["elevation"] for r in response.json()["results"]]
+        elevations.append(e for e in elevs)
 
     return elevations
 
 
-def add_elevation_to_gpx(gpx_path, output_path="with_elevation.gpx"):
+def add_elevation_to_gpx(gpx_path, output_path):
+
     # Load gpx.
-    # gpx_path = "run.gpx"
     with open(gpx_path) as f:
         gpx = gpxpy.parse(f)
 
@@ -67,7 +81,7 @@ def add_elevation_to_gpx(gpx_path, output_path="with_elevation.gpx"):
     longitudes = [p.longitude for p in points]
 
     # Update elevations.
-    elevations = gpxz_elevation(latitudes, longitudes)
+    elevations = _batch_request(latitudes, longitudes)
     for point, elevation in zip(points, elevations):
         point.elevation = elevation
 
