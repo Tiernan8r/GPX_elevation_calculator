@@ -5,7 +5,11 @@ A simple CLI utility to add elevation data to a GPX file using the [Open Elevati
 
 ## Setup:
 
-Clone the repo to your system, and `cd` to it using the CLI
+
+
+## Alternate Setup:
+
+Alternatively, you can clone the repo to your system, and `cd` to it using the CLI
 
 Setup a python virtualenvironment
 
