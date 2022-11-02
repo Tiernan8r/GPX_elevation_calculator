@@ -5,7 +5,7 @@ A simple CLI utility to add elevation data to a GPX file using the [Open Elevati
 
 ## Setup:
 
-
+Download the onefile executable from the releases page, extract, and run.
 
 ## Alternate Setup:
 
