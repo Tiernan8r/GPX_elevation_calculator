@@ -1,9 +1,6 @@
 name: Release & Upload artifacts
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: push
 
 jobs:
   build:
