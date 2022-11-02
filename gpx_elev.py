@@ -4,7 +4,7 @@ import gpxpy
 import numpy as np
 import requests
 
-BATCH_SIZE = 512  # 512 for paid customers.
+BATCH_SIZE = 512
 
 PAUSE_INTERVAL = 1
 
