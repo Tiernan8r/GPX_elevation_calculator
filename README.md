@@ -30,13 +30,13 @@ $ pip install -r requirements.txt
 Once the environment is setup and ready to go, the program can be run using:
 
 ```console
-$ python main.py
+$ python src/main.py
 ```
 
 This will result in the help message being displayed:
 
 ```console
-main.py - a utility to add elevation data to a GPX file:
+src/main.py - a utility to add elevation data to a GPX file:
 USAGE:
 main.py [FLAGS] <gpx_file>
 ARGUMENTS:
