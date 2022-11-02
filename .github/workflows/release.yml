@@ -28,7 +28,7 @@ jobs:
       - name: Upload artifact (Windows)
         uses: actions/upload-artifact@v2
         with:
-          name: GPX_elevation
+          name: GPX_elevation.exe
           path: src/dist/windows
       - name: Build
         run: echo ${{ github.sha }} > Release.txt
@@ -41,5 +41,5 @@ jobs:
           files: |
             Release.txt
             LICENSE
-            src/dist/windows/GPX_elevation
+            src/dist/windows/GPX_elevation.exe
             src/dist/linux/GPX_elevation
