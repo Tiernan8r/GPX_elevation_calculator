@@ -6,11 +6,6 @@ from typing import List, Tuple
 import gpx_elev
 import ticker
 
-GPX_FILES = ["./gpxs/LEJOG.gpx",
-             "./gpxs/_LEJOG_2019___My_15_day_routemerged_into_one.gpx",
-             "./gpxs/end_to_end_example_main_route.gpx",
-             "./gpxs/LEJOG_minimal_climbing.gpx"]
-
 OUTPUT_EXTENSION = "-elevation"
 
 
@@ -80,15 +75,9 @@ def parse_cli(args: List[str]) -> Tuple[str, str]:
         values.append(arg)
         i += 1
 
-    print("ARGS:")
-    print(args)
-    print("VALS:")
-    print(values)
-
     # Need one GPX file
     if len(values) < 1:
-        print("Must provide a GPX file to operate on!")
-        sys.exit(1)
+        usage()
 
     # Ignore extra 'files' if given
     target_val = values[0]
